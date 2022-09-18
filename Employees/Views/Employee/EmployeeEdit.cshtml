@@ -1,0 +1,114 @@
+﻿@model Employees.Models.TblEmployee
+
+@{
+    ViewBag.Title = "EmployeeEdit";
+}
+@Html.AntiForgeryToken()
+
+<div class="container card border-bottom-primary shadow-lg p-3 mb-5 bg-body rounded-3 w-50 p-3">
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger">
+            <strong>@ViewBag.Message</strong>
+        </div>
+    }
+    <form class="row g-3 needs-validation" novalidate enctype="multipart/form-data" method="post" action="@Url.Action("EmployeeEdit","Employee")">
+
+        <div class="col-12">
+            <h3>
+                Edit Employee
+            </h3>
+        </div>
+        <hr />
+        @Html.HiddenFor(model => model.Id)
+        <div class="col-md-6" style="margin-top: 15px">
+            <label for="validationCustom01" class="form-label">Employee Name</label>
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control h-25 p-3", required = "required" } })
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter Employee name.
+            </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 15px">
+            <label for="validationCustom01" class="form-label">Employee Email</label>
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control h-25 p-3", required = "required", Type = "email"} })
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter Employee email.
+            </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 15px">
+            <label for="validationCustom01" class="form-label">Employee Age</label>
+            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control h-25 p-3", required = "required", Type = "number"} })
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter Employee age.
+            </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 15px">
+            <label for="validationCustom01" class="form-label">Employee Gender</label>
+            <div style="margin-top: -8px" class="form-group">
+                <div class="radio-inline">
+            @Html.RadioButtonFor(model => model.Gender,"Male") Male
+            </div>
+            <div class="radio-inline">
+            @Html.RadioButtonFor(model => model.Gender,"Female") Female
+            </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 15px">
+            <label for="validationCustom01" class="form-label">Employee Date of Join</label>
+            @Html.EditorFor(model => model.Doj, new { htmlAttributes = new { @class = "form-control h-25 p-3", required = "required", } })
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter Employee Date of Join.
+            </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 15px">
+            @Html.LabelFor(model => model.DesignationId, "Category", htmlAttributes: new { @class = "form-label" })
+
+            @Html.DropDownListFor(model => model.DesignationId, new SelectList(ViewBag.Designation, "DesignationId", "Designation"), htmlAttributes: new { @class = "form-control h-15 p-1" })
+            @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+        <div class="col-md-2">
+            <div class="btn btn-danger">
+                <a href="@Url.Action("EmployeeCreate", "Employee")" style="text-decoration:none;color:white;">Cancel</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    // formvalidation
+    (function () {
+        'use strict'
+
+
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })();
+    setTimeout(function () { $(".alert").css('display', 'none'); }, 5000);
+</script>
